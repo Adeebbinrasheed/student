@@ -10,6 +10,27 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { GoEye } from "react-icons/go";
 import { Link } from "react-router-dom";
+import Deletedata from "./functionality/Deletedata";
+import EditData from "./functionality/Editdata";
+import Adddata from "./functionality/AddData";
+
+// import DataTable from 'react-data-table-component'
+
+// const columns = [
+// 	{
+// 		name: 'profilename',
+// 		selector: row => row.profilename,
+// 	},
+// 	{
+// 		name: 'class',
+// 		selector: row => row.class,
+// 	},
+//   {
+//     name:'sec',
+//     selector:row =>row.sec
+//   }
+// ];
+
 
 const Detail = () => {
   const details = [
@@ -19,7 +40,7 @@ const Detail = () => {
       profilename: "Garima Singh",
       class: 5,
       sec: "B",
-      parents: "Ronaldo Singh",
+      parent: "Ronaldo Singh",
       DOB: "20/10/2007",
       phone: 1239988568,
       email: "r93@gmail.com",
@@ -30,7 +51,7 @@ const Detail = () => {
       profilename: "mark",
       class: 4,
       sec: "C",
-      parents: "jogn doe",
+      parent: "john doe",
       DOB: "10/12/2006",
       phone: 9152485411,
       email: "mark193@gmail.com",
@@ -41,7 +62,7 @@ const Detail = () => {
       profilename: "walt vv",
       class: 5,
       sec: "B",
-      parents: "Singh",
+      parent: "Singh",
       DOB: "20/10/2007",
       phone: 1239988568,
       email: "r93@gmail.com",
@@ -49,6 +70,64 @@ const Detail = () => {
   ];
 
   const [data, setData] = useState(details);
+
+  const [show, setShow] = useState(false);
+  const [itemTodelete, setItemTodelete] = useState(null);
+
+  const [editShow, setEditshow] = useState(false);
+  const [itemToedit, setItemToedit] = useState(null);
+
+  const [addShow, setAddShow] = useState(false);
+
+  const handleDelete = (id) => {
+    setItemTodelete(id);
+    setShow(true);
+  };
+  const confirmDelete = () => {
+    setData(data.filter((item) => item.id !== itemTodelete));
+    setShow(false);
+  };
+
+  const cancelDelete = () => {
+    setShow(false);
+    setItemTodelete(null);
+  };
+
+  // edit
+  const handleEdit = (item) => {
+    setItemToedit(item);
+    setEditshow(true);
+  };
+
+  const confirmEdit = (updatedItem) => {
+    setData((data) =>
+      data.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+    setEditshow(false);
+    setItemToedit(null);
+  };
+
+  const cancelEdit = () => {
+    setEditshow(false);
+    setItemToedit(null);
+  };
+
+  //adding
+  const handleAdd = () => {
+    setAddShow(true);
+  };
+
+  const confirmAdd = (Newdata) => {
+    console.log(Newdata);
+
+    setData([...data, Newdata]);
+    setAddShow(false);
+  };
+
+  const cancelAdd = () => {
+    setAddShow(false);
+  };
+
   return (
     <div className="bg-gray-400 min-h-screen pt-5 ">
       <div className="flex space-y-4 md:space-y-0 items-center md:justify-between flex-col  md:flex-row bg-white  rounded-xl mx-5 md:px-6 ">
@@ -102,9 +181,12 @@ const Detail = () => {
             placeholder="Search Student"
             className="border  md:px-2 md:pr-14 rounded-md outline-none "
           />
-          <div className="bg-blue-500 flex items-center space-x-2 md:p-1 rounded-2xl text-white hover:text-black">
+          <div
+            className="bg-blue-500 flex items-center space-x-2 md:p-1 rounded-2xl text-white hover:text-black"
+            onClick={handleAdd}
+          >
             <IoMdPersonAdd />
-           <Link to='/student'> <button className="">Add Student</button></Link>
+            <button className="">Add Student</button>
           </div>
         </div>
 
@@ -139,21 +221,34 @@ const Detail = () => {
                       </div>
                     </td>
                     <td>{data.sec}</td>
-                    <td>{data.parents}</td>
+                    <td>{data.parent}</td>
                     <td>{data.DOB}</td>
                     <td>{data.phone}</td>
                     <td>{data.email}</td>
                     <td>
-                      <div className="flex gap-3 justify-center pl-5">
-                        <button className="text-blue-600">
+                      <div className="flex gap-3 justify-center pl-5 ">
+                        <button
+                          className="text-blue-600 hover:text-blue-950"
+                          onClick={() => {
+                            handleEdit(data);
+                          }}
+                        >
                           <CiEdit />
                         </button>
-                        <button className="text-red-500">
+                        <button
+                          className="text-red-500 hover:text-red-900"
+                          onClick={() => {
+                            handleDelete(data.id);
+                          }}
+                        >
                           <RiDeleteBinLine />
                         </button>
-                        <button className="text-blue-400">
-                          <GoEye />
-                        </button>
+                        <Link to="/student">
+                          {" "}
+                          <button className="text-blue-400 hover:text-lg">
+                            <GoEye />
+                          </button>
+                        </Link>
                       </div>
                     </td>
                   </tr>
@@ -162,6 +257,28 @@ const Detail = () => {
             </tbody>
           </table>
         </div>
+        {/* <DataTable columns={columns} data={data}/> */}
+
+        {/* deleting a data */}
+        {show && (
+          <Deletedata
+            confirmDelete={confirmDelete}
+            cancelDelete={cancelDelete}
+          />
+        )}
+
+        {/* editing a data */}
+        {editShow && (
+          <EditData
+            confirmEdit={confirmEdit}
+            cancelEdit={cancelEdit}
+            item={itemToedit}
+          />
+        )}
+
+        {/* adding a data */}
+
+        {addShow && <Adddata cancel={cancelAdd} confirmAdd={confirmAdd} />}
       </div>
     </div>
   );

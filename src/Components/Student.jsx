@@ -10,8 +10,15 @@ import report from "../report";
 
 const Student = () => {
   const [image, setImage] = useState(upload);
+  const [name, setName] = useState("");
+  const [classValue, setClassValue] = useState("");
+  const [section, setSection] = useState("");
+  const [dob, setDob] = useState("");
+  const [parent, setParent] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+
   const fileInputRef = useRef(null);
-  
 
   const handleImage = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -22,6 +29,11 @@ const Student = () => {
 
   const triggerFileInput = () => {
     fileInputRef.current?.click();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(name, classValue,section,dob,parent,phone,email);
   };
   return (
     <div className=" bg-gray-400 pt-5">
@@ -69,7 +81,7 @@ const Student = () => {
       </div>
       <div className="flex flex-col md:flex-row pt-5 mx-5">
         <div className="bg-white md:w-[40%]   px-4 py-6 rounded-xl">
-          <form action="">
+          <form action="" onSubmit={handleSubmit}>
             <div className="flex justify-center items-center flex-col gap-1 ">
               <img
                 src={image}
@@ -84,7 +96,7 @@ const Student = () => {
                 style={{ display: "none" }}
                 onChange={handleImage}
               />
-              <h1 className="font-semibold text-lg">Name</h1>
+              <h1 className="font-semibold text-lg">{name}</h1>
               <button className="text-blue-500 text-sm bg-blue-100 rounded-full px-2">
                 Student
               </button>
@@ -114,36 +126,51 @@ const Student = () => {
                   <input
                     type="text"
                     placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     className="font-light outline-none"
                     required
                   />
                 </div>
                 <div className="space-x-2">
                   <label htmlFor="">Class:</label>
-                  <select name="" id="" className="font-light outline-none">
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                    <option value="">4</option>
-                    <option value="">5</option>
-                    <option value="">6</option>
-                    <option value="">7</option>
-                    <option value="">8</option>
-                    <option value="">9</option>
-                    <option value="">10</option>
-                    <option value="">11</option>
-                    <option value="">12</option>
+                  <select
+                    name=""
+                    id=""
+                    value={classValue}
+                    className="font-light outline-none"
+                    onChange={(e) => setClassValue(e.target.value)}
+                  >
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
                   </select>
                 </div>
                 <div className="space-x-2">
                   <label htmlFor="">Section:</label>
 
-                  <select name="" id="" className="font-light">
-                    <option value="">A</option>
+                  <select
+                    name=""
+                    id=""
+                    className="font-light"
+                    value={section}
+                    onChange={(e) => setSection(e.target.value)}
+                  >
                     <option value=""></option>
-                    <option value="">B</option>
-                    <option value="">C</option>
-                    <option value="">D</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
                   </select>
                 </div>
                 <div className="space-x-2">
@@ -152,15 +179,19 @@ const Student = () => {
                     type="date"
                     name=""
                     id=""
+                    value={dob}
+                    onChange={(e) => setDob(e.target.value)}
                     className="font-light"
                     required
                   />
                 </div>
                 <div className="space-x-2">
-                  <label htmlFor="">Parents:</label>
+                  <label htmlFor="">Parent:</label>
                   <input
                     type="text"
                     placeholder="Enter name"
+                    value={parent}
+                    onChange={(e) => setParent(e.target.value)}
                     className="font-light"
                     required
                   />
@@ -171,6 +202,8 @@ const Student = () => {
                     type="number"
                     id="phone"
                     name="phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                     className="font-light"
                     placeholder="123-456-7890"
                     required
@@ -180,6 +213,8 @@ const Student = () => {
                   <label htmlFor="">Email:</label>
                   <input
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="enter your email"
                     className="font-light"
                   />
@@ -189,7 +224,10 @@ const Student = () => {
                 <button className="bg-blue-500 rounded-full p-1 px-11">
                   Edit
                 </button>
-                <button className="bg-red-400 rounded-full p-1 px-11">
+                <button
+                  className="bg-red-400 rounded-full p-1 px-11"
+                  type="submit"
+                >
                   Delete
                 </button>
               </div>
@@ -228,13 +266,13 @@ const Student = () => {
               {report.map((data) => (
                 <>
                   <div className="p-2 border-b border-gray-300">
-                   {data.code}
+                    {data.code}
                   </div>
                   <div className="p-2 border-b border-gray-300">
                     {data.subject}
                   </div>
                   <div className="p-2 border-b border-gray-300">
-                   {data.marks}%
+                    {data.marks}%
                   </div>
                   <div className="p-2 border-b border-gray-300">
                     {data.grade}
