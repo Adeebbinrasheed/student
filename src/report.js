@@ -19,7 +19,8 @@ const report=[
         marks:50,
         grade:'A',
         remarks:'Pass'
-    }
+    },
+    
 ]
 
 export default report

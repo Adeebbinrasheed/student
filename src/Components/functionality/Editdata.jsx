@@ -21,6 +21,7 @@ const EditData = ({ item, confirmEdit, cancelEdit }) => {
       <div className="bg-white p-4 space-y-5 w-[50%] rounded-lg">
         <h1 className="font-semibold">Student Data</h1>
         <form onSubmit={handleSubmit} className="space-y-3 space-x-4">
+          <input type="file" onChange={handleChange} value={formData.profileimage} />
           <input
             type="text"
             name="profilename"

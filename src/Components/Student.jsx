@@ -7,36 +7,37 @@ import { CiMicrochip } from "react-icons/ci";
 import admin from "../assets/admin.jpg";
 import upload from "../assets/upload.jpg";
 import report from "../report";
+import { Link, useLocation } from "react-router-dom";
+import DataTable from "react-data-table-component";
 
 const Student = () => {
-  const [image, setImage] = useState(upload);
-  const [name, setName] = useState("");
-  const [classValue, setClassValue] = useState("");
-  const [section, setSection] = useState("");
-  const [dob, setDob] = useState("");
-  const [parent, setParent] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const location = useLocation();
+  const stateData = location.state;
 
-  const fileInputRef = useRef(null);
-
-  const handleImage = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setImage(URL.createObjectURL(file));
-    }
-  };
-
-  const triggerFileInput = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(name, classValue,section,dob,parent,phone,email);
-  };
+  const columns = [
+    {
+      name: "Code",
+      selector: (row) => row.code,
+    },
+    {
+      name: "SubjectName",
+      selector: (row) => row.subject,
+    },
+    {
+      name: "Marks",
+      selector: (row) => row.marks,
+    },
+    {
+      name: "Grade",
+      selector: (row) => row.grade,
+    },
+    {
+      name: "Remarks",
+      selector: (row) => row.remarks,
+    },
+  ];
   return (
-    <div className=" bg-gray-400 pt-5">
+    <div className=" bg-gray-400 min-h-screen pt-5">
       <div className="flex space-y-4 md:space-y-0 items-center md:justify-between flex-col  md:flex-row bg-white rounded-xl mx-5 md:px-6 ">
         <h1>
           <CiMenuFries />
@@ -75,164 +76,79 @@ const Student = () => {
       <div className="flex items-center justify-between p-3 md:p-5 bg-white mx-5 mt-5 rounded-xl">
         <h1 className="font-medium">Students Data</h1>
         <div className="flex gap-5">
-          <h1>Home</h1>
-          <h1 className="font-light">Students Data</h1>
+          <Link to="/">
+            <h1 className="hover:font-bold">Home</h1>
+          </Link>
+          <h1 className="hover:font-bold">Students Data</h1>
         </div>
       </div>
       <div className="flex flex-col md:flex-row pt-5 mx-5">
-        <div className="bg-white md:w-[40%]   px-4 py-6 rounded-xl">
-          <form action="" onSubmit={handleSubmit}>
-            <div className="flex justify-center items-center flex-col gap-1 ">
-              <img
-                src={image}
-                width={90}
-                alt="Selected"
-                onClick={triggerFileInput}
-                className="cursor-pointer rounded-xl border-2"
-              />
-              <input
-                type="file"
-                ref={fileInputRef}
-                style={{ display: "none" }}
-                onChange={handleImage}
-              />
-              <h1 className="font-semibold text-lg">{name}</h1>
-              <button className="text-blue-500 text-sm bg-blue-100 rounded-full px-2">
-                Student
-              </button>
-            </div>
-            <div className="flex justify-around pt-7">
-              <div className="flex items-center space-x-2">
-                <MdDone className=" text-green-500 bg-green-100 rounded-full w-8 h-8" />
-                <div>
-                  <h1>1.23K</h1>
-                  <p>Tasks Done</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-2">
-                <CiMicrochip className=" text-green-500 bg-green-100 rounded-full w-8 h-8" />
-                <div>
-                  <h1>568</h1>
-                  <p>Projects Done</p>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-2 pt-5 pl-5">
-              <h1>Details</h1>
-              <hr />
-              <div className="space-y-2 flex flex-col">
-                <div className="space-x-2">
-                  <label htmlFor="">Name:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="font-light outline-none"
-                    required
-                  />
-                </div>
-                <div className="space-x-2">
-                  <label htmlFor="">Class:</label>
-                  <select
-                    name=""
-                    id=""
-                    value={classValue}
-                    className="font-light outline-none"
-                    onChange={(e) => setClassValue(e.target.value)}
-                  >
-                    <option value=""></option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                  </select>
-                </div>
-                <div className="space-x-2">
-                  <label htmlFor="">Section:</label>
+        <div className="bg-white md:w-[40%] h-[530px]   px-4 py-4 rounded-xl">
+          <div className="flex justify-center items-center flex-col gap-1 ">
+            <img
+              src={stateData.profileimage}
+              width={90}
+              alt="profile"
+              className="rounded-xl"
+            />
 
-                  <select
-                    name=""
-                    id=""
-                    className="font-light"
-                    value={section}
-                    onChange={(e) => setSection(e.target.value)}
-                  >
-                    <option value=""></option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                  </select>
-                </div>
-                <div className="space-x-2">
-                  <label htmlFor="">Date Of Birth:</label>
-                  <input
-                    type="date"
-                    name=""
-                    id=""
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                    className="font-light"
-                    required
-                  />
-                </div>
-                <div className="space-x-2">
-                  <label htmlFor="">Parent:</label>
-                  <input
-                    type="text"
-                    placeholder="Enter name"
-                    value={parent}
-                    onChange={(e) => setParent(e.target.value)}
-                    className="font-light"
-                    required
-                  />
-                </div>
-                <div className="space-x-2">
-                  <label htmlFor="">Phone:</label>
-                  <input
-                    type="number"
-                    id="phone"
-                    name="phone"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="font-light"
-                    placeholder="123-456-7890"
-                    required
-                  />
-                </div>
-                <div className="space-x-2">
-                  <label htmlFor="">Email:</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="enter your email"
-                    className="font-light"
-                  />
-                </div>
-              </div>
-              <div className="flex justify-center gap-6 pt-5">
-                <button className="bg-blue-500 rounded-full p-1 px-11">
-                  Edit
-                </button>
-                <button
-                  className="bg-red-400 rounded-full p-1 px-11"
-                  type="submit"
-                >
-                  Delete
-                </button>
+            <h1 className="font-semibold text-lg">{stateData.profilename}</h1>
+            <button className="text-blue-500 text-sm bg-blue-100 rounded-full px-2">
+              Student
+            </button>
+          </div>
+          <div className="flex justify-around pt-7 ">
+            <div className="flex items-center space-x-2">
+              <MdDone className=" text-green-500 bg-green-100 rounded-full w-8 h-8" />
+              <div>
+                <h1>1.23K</h1>
+                <p>Tasks Done</p>
               </div>
             </div>
-          </form>
+            <div className="flex items-center space-x-2">
+              <CiMicrochip className=" text-green-500 bg-green-100 rounded-full w-8 h-8" />
+              <div>
+                <h1>568</h1>
+                <p>Projects Done</p>
+              </div>
+            </div>
+          </div>
+          <div className="space-y-2 pt-5 pl-5">
+            <h1>Details</h1>
+            <hr />
+
+              <div className="space-y-2">
+                <p>
+                  <span className="font-semibold">Name: </span>
+                  {stateData.profilename}
+                </p>
+                <p>
+                  <span className="font-semibold">Class: </span>
+                  {stateData.class}
+                </p>
+                <p>
+                  <span className="font-semibold">Section: </span>
+                  {stateData.sec}
+                </p>
+                <p>
+                  <span className="font-semibold">Date Of Birth: </span>
+                  {stateData.DOB}
+                </p>
+                <p>
+                  <span className="font-semibold">Parent: </span>
+                  {stateData.parent}
+                </p>
+                <p>
+                  <span className="font-semibold">Phone: </span>
+                  {stateData.phone}
+                </p>
+                <p>
+                  <span className="font-semibold">Email: </span>
+                  {stateData.email}
+                </p>
+             
+            </div>
+          </div>
         </div>
         <div className="pl-5 w-full">
           <div className="space-x-7">
@@ -247,7 +163,7 @@ const Student = () => {
           <div className="bg-white rounded-lg px-5 space-y-2 pt-3 mt-3">
             <h1 className="font-semibold text-xl">Progress Report</h1>
             <hr />
-            <div className="grid grid-cols-5 gap-1  border-gray-300">
+            {/* <div className="grid grid-cols-5 gap-1  border-gray-300">
               <div className=" font-bold p-2 border-b border-gray-300">
                 Code
               </div>
@@ -282,7 +198,8 @@ const Student = () => {
                   </div>
                 </>
               ))}
-            </div>
+            </div> */}
+            <DataTable columns={columns} data={report} pagination />
           </div>
         </div>
       </div>
