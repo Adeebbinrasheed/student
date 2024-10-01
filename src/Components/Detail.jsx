@@ -158,9 +158,13 @@ const Detail = () => {
   };
 
   const confirmEdit = (updatedItem) => {
-    
+    const imageUrl = URL.createObjectURL(updatedItem.profileImage);
+    const editedItem={
+      ...updatedItem,profileimage:imageUrl,
+
+    }
     setData((data) =>
-      data.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+      data.map((item) => (item.id === editedItem.id ? editedItem : item))
     );
     setEditshow(false);
     setItemToedit(null);

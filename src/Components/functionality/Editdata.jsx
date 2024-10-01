@@ -16,12 +16,23 @@ const EditData = ({ item, confirmEdit, cancelEdit }) => {
     confirmEdit(formData);
   };
 
+  const handleImage = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      
+      setFormData({
+        ...formData,
+        profileImage: file, 
+      });
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-45">
-      <div className="bg-white p-4 space-y-5 w-[50%] rounded-lg">
+      <div className="bg-white p-4 space-y-5 w-full max-w-xl rounded-lg">
         <h1 className="font-semibold">Student Data</h1>
         <form onSubmit={handleSubmit} className="space-y-3 space-x-4">
-          <input type="file" onChange={handleChange} value={formData.profileimage} />
+          <input type="file" onChange={handleImage} accept='image/*' className='border p-1 rounded' />
           <input
             type="text"
             name="profilename"
@@ -77,7 +88,7 @@ const EditData = ({ item, confirmEdit, cancelEdit }) => {
             placeholder="Email"
             className="border p-2 rounded"
           />
-          <div className="flex justify-center space-x-9">
+          <div className="flex justify-center md:justify-end space-x-7 md:pr-5">
             <button
               type="button"
               className="bg-red-400 p-1 rounded-lg"

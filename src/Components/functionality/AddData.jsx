@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const Adddata = ({ cancel, confirmAdd }) => {
-  const [image, setImage] = useState(null);
+  
   const [formData, setFormData] = useState({
     profileImage:null,
     profilename: "",
@@ -30,7 +30,7 @@ const Adddata = ({ cancel, confirmAdd }) => {
   const handleImage = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setImage(URL.createObjectURL(file));
+      
       setFormData({
         ...formData,
         profileImage: file, 
@@ -40,7 +40,7 @@ const Adddata = ({ cancel, confirmAdd }) => {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-45">
-      <div className="bg-white p-4 space-y-5 w-[50%] rounded-lg">
+      <div className="bg-white p-4 space-y-5 w-full max-w-xl rounded-lg">
         <h1 className="font-semibold">Student Data</h1>
         <form onSubmit={handleSubmit} className="space-y-3 space-x-4">
           <input
