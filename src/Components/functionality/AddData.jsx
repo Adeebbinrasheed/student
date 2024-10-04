@@ -58,6 +58,7 @@ const Adddata = ({ cancel, confirmAdd }) => {
             placeholder="Profile Name"
             className="border p-2 rounded"
           />
+          
           <input
             type="number"
             name="class"
@@ -72,7 +73,8 @@ const Adddata = ({ cancel, confirmAdd }) => {
             value={formData.sec}
             onChange={handleChange}
             placeholder="Section"
-            className="border p-2 rounded"
+            className="border p-2 rounded capitalize"
+            
           />
           <input
             type="text"
@@ -82,6 +84,7 @@ const Adddata = ({ cancel, confirmAdd }) => {
             placeholder="Parent Name"
             className="border p-2 rounded"
           />
+          
           <input
             type="date"
             name="DOB"

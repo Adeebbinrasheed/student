@@ -9,6 +9,7 @@ import upload from "../assets/upload.jpg";
 import report from "../report";
 import { Link, useLocation } from "react-router-dom";
 import DataTable from "react-data-table-component";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 const Student = () => {
   const location = useLocation();
@@ -29,6 +30,29 @@ const Student = () => {
     },
     {
       name: "Grade",
+      selector: (row) => row.grade,
+    },
+    {
+      name: "Remarks",
+      selector: (row) => row.remarks,
+    },
+  ];
+
+  const column1 = [
+    {
+      name: "Fee",
+      selector: (row) => row.code,
+    },
+    {
+      name: "Price",
+      selector: (row) => row.subject,
+    },
+    {
+      name: "Marks",
+      selector: (row) => row.marks,
+    },
+    {
+      name: "",
       selector: (row) => row.grade,
     },
     {
@@ -117,90 +141,62 @@ const Student = () => {
             <h1>Details</h1>
             <hr />
 
-              <div className="space-y-2">
-                <p>
-                  <span className="font-semibold">Name: </span>
+            <div className="space-y-2">
+              <p className="flex">
+                <span className="font-semibold">Name: </span>
+                <span className="ml-2 text-gray-500">
                   {stateData.profilename}
-                </p>
-                <p>
-                  <span className="font-semibold">Class: </span>
-                  {stateData.class}
-                </p>
-                <p>
-                  <span className="font-semibold">Section: </span>
-                  {stateData.sec}
-                </p>
-                <p>
-                  <span className="font-semibold">Date Of Birth: </span>
-                  {stateData.DOB}
-                </p>
-                <p>
-                  <span className="font-semibold">Parent: </span>
-                  {stateData.parent}
-                </p>
-                <p>
-                  <span className="font-semibold">Phone: </span>
-                  {stateData.phone}
-                </p>
-                <p>
-                  <span className="font-semibold">Email: </span>
-                  {stateData.email}
-                </p>
-             
+                </span>
+              </p>
+              <p className="flex">
+                <span className="font-semibold">Class: </span>
+                <span className="ml-2 text-gray-500">{stateData.class}</span>
+              </p>
+              <p className="flex">
+                <span className="font-semibold">Section: </span>
+                <span className="ml-2 text-gray-500">{stateData.sec}</span>
+              </p>
+              <p className="flex">
+                <span className="font-semibold">Date Of Birth: </span>
+                <span className="ml-2 text-gray-500">{stateData.DOB}</span>
+              </p>
+              <p className="flex">
+                <span className="font-semibold">Parent: </span>
+                <span className="ml-2 text-gray-500">{stateData.parent}</span>
+              </p>
+              <p className="flex">
+                <span className="font-semibold">Phone: </span>
+                <span className="ml-2 text-gray-500">{stateData.phone}</span>
+              </p>
+              <p className="flex">
+                <span className="font-semibold">Email: </span>
+                <span className="ml-2 text-gray-500">{stateData.email}</span>
+              </p>
             </div>
           </div>
         </div>
         <div className="pl-5 w-full">
-          <div className="space-x-7">
-            <button className="hover:bg-blue-500 font-medium hover:rounded-full p-1 hover:text-white">
-              Progress Report
-            </button>
-            <button className="hover:bg-blue-500 font-medium hover:rounded-full p-1 px-3 hover:text-white">
-              Fees
-            </button>
-          </div>
+          <Tabs>
+            <TabList className="flex gap-5">
+              <Tab className="hover:bg-blue-500 font-medium hover:rounded-full p-1 hover:text-white">
+                Progress Report
+              </Tab>
+              <Tab className="hover:bg-blue-500 font-medium hover:rounded-full p-1 px-3 hover:text-white">
+                Fees
+              </Tab>
+            </TabList>
 
-          <div className="bg-white rounded-lg px-5 space-y-2 pt-3 mt-3">
-            <h1 className="font-semibold text-xl">Progress Report</h1>
-            <hr />
-            {/* <div className="grid grid-cols-5 gap-1  border-gray-300">
-              <div className=" font-bold p-2 border-b border-gray-300">
-                Code
+            <TabPanel className="mt-4">
+              <div className="bg-white rounded-lg p-4">
+                <DataTable columns={columns} data={report} pagination />
               </div>
-              <div className=" font-bold p-2 border-b border-gray-300">
-                SubjectName
+            </TabPanel>
+            <TabPanel>
+              <div className="bg-white rounded-lg p-4">
+                <DataTable columns={column1} data={report} pagination />
               </div>
-              <div className=" font-bold p-2 border-b border-gray-300">
-                Marks
-              </div>
-              <div className="font-bold p-2 border-b border-gray-300">
-                Grade
-              </div>
-              <div className="font-bold p-2 border-b border-gray-300">
-                Remarks
-              </div>
-              {report.map((data) => (
-                <>
-                  <div className="p-2 border-b border-gray-300">
-                    {data.code}
-                  </div>
-                  <div className="p-2 border-b border-gray-300">
-                    {data.subject}
-                  </div>
-                  <div className="p-2 border-b border-gray-300">
-                    {data.marks}%
-                  </div>
-                  <div className="p-2 border-b border-gray-300">
-                    {data.grade}
-                  </div>
-                  <div className="p-2 border-b border-gray-300">
-                    {data.remarks}
-                  </div>
-                </>
-              ))}
-            </div> */}
-            <DataTable columns={columns} data={report} pagination />
-          </div>
+            </TabPanel>
+          </Tabs>
         </div>
       </div>
     </div>

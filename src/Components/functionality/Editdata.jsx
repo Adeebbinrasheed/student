@@ -55,7 +55,7 @@ const EditData = ({ item, confirmEdit, cancelEdit }) => {
             value={formData.sec}
             onChange={handleChange}
             placeholder="Section"
-            className="border p-2 rounded"
+            className="border p-2 rounded capitalize"
           />
           <input
             type="text"

@@ -18,10 +18,6 @@ import DataTable from "react-data-table-component";
 const Detail = () => {
   const columns = [
     {
-      name: "Sl.No",
-      selector: (row, index) => index + 1,
-    },
-    {
       name: "Profile",
       selector: (row) => (
         <div className="flex items-center space-x-3">
@@ -38,15 +34,15 @@ const Detail = () => {
       ),
     },
     {
-      name: "class",
+      name: "Class",
       selector: (row) => row.class,
     },
     {
-      name: "sec",
+      name: "Section",
       selector: (row) => row.sec,
     },
     {
-      name: "parent",
+      name: "ParentName",
       selector: (row) => row.parent,
     },
     {
@@ -58,7 +54,7 @@ const Detail = () => {
       selector: (row) => row.phone,
     },
     {
-      name: "email",
+      name: "Email",
       selector: (row) => row.email,
     },
     {
@@ -152,7 +148,7 @@ const Detail = () => {
   };
 
   // edit
-  const handleEdit = (item) => {
+    const handleEdit = (item) => {
     setItemToedit(item);
     setEditshow(true);
   };
